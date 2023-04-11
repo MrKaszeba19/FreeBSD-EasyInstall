@@ -10,12 +10,14 @@ fi
 # install necessary things
 echo "------------------------------------------------------------------"
 echo "Updating FreeBSD packages..."
+# TODO: change the updater
 freebsd-update fetch
 freebsd-update install
 if [ "$?" -ne "0" ] ;
 then
     echo "Error when updating FreeBSD packages."
     exit 1
+    # TODO: add continue option
 fi
 
 echo "------------------------------------------------------------------"
@@ -48,15 +50,16 @@ echo 'dbus_enable="YES"' >> /etc/rc.conf
 echo 'hald_enable="YES"' >> /etc/rc.conf
 echo 'slim_enable="YES"' >> /etc/rc.conf
 echo 'exec xfce4-session' >> /root/.xinitrc
+echo "Done."
 
 #------------------------------------------------
 # set up users that might log in using XFCE
 echo "------------------------------------------------------------------"
+echo "Setting up users that may log in via XFCE"
 usern="user"
-while [ -n "usern" ]
+while [ "s$usern" != "s" ]
 do
     echo
-    echo "Setting up users that may log in via XFCE"
     echo "Type an username of the user (or press RETURN to quit)"
     read usern
     if [ "s$usern" != "s" ] ;
@@ -75,6 +78,11 @@ do
         fi
     fi
 done
+
+# TODO: add option to remove root from video access
+# TODO: add all users option
+# TODO: add install basic software option
+# TODO: convert all to functions
 
 echo
 echo "------------------------------------------------------------------"
