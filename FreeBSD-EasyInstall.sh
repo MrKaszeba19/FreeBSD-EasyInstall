@@ -1,4 +1,11 @@
 #!/bin/sh
+
+agree=0
+if [ "$1" = "-y" ] ;
+then
+    agree=1
+fi
+
 # -----------------------------------------------
 # install necessary things
 echo "------------------------------------------------------------------"
@@ -13,13 +20,25 @@ fi
 
 echo "------------------------------------------------------------------"
 echo "Installing XFCE..."
-pkg install -y xorg
-pkg install slim
-pkg install xfce
-if [ "$?" -ne "0" ] ;
-then
-    echo "Error when installing XFCE."
-    exit 1
+if [ "$agree" -eq "1" ] ;
+then 
+    pkg install -y xorg
+    pkg install -y slim
+    pkg install -y xfce
+    if [ "$?" -ne "0" ] ;
+    then
+        echo "Error when installing XFCE."
+        exit 1
+    fi
+else
+    pkg install xorg
+    pkg install slim
+    pkg install xfce
+    if [ "$?" -ne "0" ] ;
+    then
+        echo "Error when installing XFCE."
+        exit 1
+    fi
 fi
 
 #------------------------------------------------
