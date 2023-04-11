@@ -17,5 +17,5 @@ and some useful programs.
 4. Get EasyInstall script via either:
     - wget, i.e. `wget https://raw.githubusercontent.com/RooiGevaar19/FreeBSD-EasyInstall/master/FreeBSD-EasyInstall.sh`
     - cloning repository, i.e. `git clone https://github.com/RooiGevaar19/FreeBSD-EasyInstall.git`
-   and follow its steps. You can automatically agree on all questions with `-y` flag.
+   and follow its steps. 
 5. Reboot with `reboot` command and enjoy. :smile:
