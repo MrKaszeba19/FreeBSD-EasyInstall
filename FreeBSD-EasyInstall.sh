@@ -22,18 +22,14 @@ echo "------------------------------------------------------------------"
 echo "Installing XFCE..."
 if [ "$agree" -eq "1" ] ;
 then 
-    pkg install -y xorg
-    pkg install -y slim
-    pkg install -y xfce
+    pkg install -y xorg slim xfce
     if [ "$?" -ne "0" ] ;
     then
         echo "Error when installing XFCE."
         exit 1
     fi
 else
-    pkg install xorg
-    pkg install slim
-    pkg install xfce
+    pkg install xorg slim xfce
     if [ "$?" -ne "0" ] ;
     then
         echo "Error when installing XFCE."
