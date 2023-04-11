@@ -10,9 +10,7 @@ fi
 # install necessary things
 echo "------------------------------------------------------------------"
 echo "Updating FreeBSD packages..."
-# TODO: change the updater
-freebsd-update fetch
-freebsd-update install
+pkg upgrade
 if [ "$?" -ne "0" ] ;
 then
     echo "Error when updating FreeBSD packages."
