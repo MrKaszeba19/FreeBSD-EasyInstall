@@ -1,13 +1,22 @@
+#!/bin/sh
 # -----------------------------------------------
 # install necessary things
+echo "------------------------------------------------------------------"
 echo "Updating FreeBSD packages..."
 freebsd-update fetch
 freebsd-update install
+if [ "$?" -ne "0" ] ;
+then
+    echo "Error when updating FreeBSD packages."
+    exit 1
+fi
+
+echo "------------------------------------------------------------------"
 echo "Installing XFCE..."
 pkg install -y xorg
 pkg install slim
 pkg install xfce
-if [ $? -ne 0 ] ;
+if [ "$?" -ne "0" ] ;
 then
     echo "Error when installing XFCE."
     exit 1
@@ -15,6 +24,7 @@ fi
 
 #------------------------------------------------
 # set up xfce things
+echo "------------------------------------------------------------------"
 echo "Applying global XFCE settings..."
 echo '#----------------' >> /etc/rc.conf
 echo '# xfce4 addition ' >> /etc/rc.conf
@@ -26,24 +36,32 @@ echo 'exec xfce4-session' >> /root/.xinitrc
 
 #------------------------------------------------
 # set up users that might log in using XFCE
+echo "------------------------------------------------------------------"
 usern="user"
 while [ -n "usern" ]
 do
     echo
     echo "Setting up users that may log in via XFCE"
     echo "Type an username of the user (or press RETURN to quit)"
-    read USER
-    if [ "s$usern" -ne "s" ] ;
+    read usern
+    if [ "s$usern" != "s" ] ;
     then
         echo "User: $usern"
         home_dir=`getent passwd "$usern" | cut -d : -f 6`
-        cp /root/.xinitrc "$home_dir/.xinitrc"
-        pw groupmod video -m $usern
-        pw groupmod wheel -m $usern
-        echo "Done setting up $usern."
+        if [ "a$home_dir" != "a" ] ; then
+            echo "User exists"
+            echo "Home directory: $home_dir"
+            cp /root/.xinitrc "$home_dir/.xinitrc"
+            pw groupmod video -m $usern
+            pw groupmod wheel -m $usern
+            echo "Done setting up $usern."
+        else
+            echo "Error when setting up $usern. This user probably does not exist."
+        fi
     fi
 done
 
 echo
+echo "------------------------------------------------------------------"
 echo "Done. Please reboot."
 
