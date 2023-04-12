@@ -1,4 +1,4 @@
-# FreeBSD installer script
+# FreeBSD easy interface installer script
 
 **Author:** RooiGevaar19 ([github](https://www.github.com/RooiGevaar19))
 

@@ -86,6 +86,7 @@ configure_users_dialog () {
     ans_a="1"
     flag="0"
     while [ "$flag" != "1" ]
+    do
         echo
         echo "What do you want to do?"
         echo "    1 - Make all users be able to log in via $dktop_name"
@@ -118,7 +119,6 @@ configure_users_dialog () {
     done
 
     # TODO: add option to remove root from video access
-    # TODO: add all users option
     # TODO: add install basic software option
 }
 
