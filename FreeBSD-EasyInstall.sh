@@ -10,12 +10,23 @@ fi
 # install necessary things
 echo "------------------------------------------------------------------"
 echo "Updating FreeBSD packages..."
-pkg upgrade
-if [ "$?" -ne "0" ] ;
-then
-    echo "Error when updating FreeBSD packages."
-    exit 1
-    # TODO: add continue option
+if [ "$agree" -eq "1" ] ;
+then 
+    pkg -y upgrade
+    if [ "$?" -ne "0" ] ;
+    then
+        echo "Error when updating FreeBSD packages."
+        exit 1
+        # TODO: add continue option
+    fi
+else
+    pkg upgrade
+    if [ "$?" -ne "0" ] ;
+    then
+        echo "Error when updating FreeBSD packages."
+        exit 1
+        # TODO: add continue option
+    fi
 fi
 
 echo "------------------------------------------------------------------"
