@@ -9,7 +9,7 @@ fi
 update_packages () {
     if [ "$agree" -eq "1" ] ;
     then 
-        pkg -y upgrade
+        pkg upgrade -y
         if [ "$?" -ne "0" ] ;
         then
             echo "Error when updating FreeBSD packages."
