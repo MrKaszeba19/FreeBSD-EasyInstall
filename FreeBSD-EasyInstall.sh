@@ -6,44 +6,93 @@ then
     agree=1
 fi
 
+choose_desktop() {
+    flag="0"
+    dktop=""
+    while [ "$flag" != "1" ]
+    do
+        clear
+        echo "What desktop do you want to have?"
+        echo "    1 - Xfce"
+        echo "    2 - GNOME"
+        echo 
+        echo "    0 - Exit"
+        read ans_a
+        echo $ans_a | grep "[^0-2]" > /dev/null 2>&1
+        if [ "$?" -ne "0" ]; 
+        then
+            case $ans_a in
+	            1)
+                    echo "You've picked XFCE."
+                    $dktop="xfce"
+	    	    ;;
+	            2)
+                    echo "You've picked GNOME."
+                    $dktop="gnome"
+	    	    ;;
+	            *)
+		            fatal_error 1 "Error when picking up the desktop. This desktop does not exist or is not supported."
+		        ;;
+            esac
+        fi
+    return $dktop;
+}
+
+fatal_error () {
+    code=$1
+    msg=$2
+    echo $msg
+    exit $code
+}
+
 update_packages () {
     if [ "$agree" -eq "1" ] ;
     then 
         pkg upgrade -y
         if [ "$?" -ne "0" ] ;
         then
-            echo "Error when updating FreeBSD packages."
-            exit 1
+            fatal_error 2 "Error when updating FreeBSD packages."
             # TODO: add continue option
         fi
     else
         pkg upgrade
         if [ "$?" -ne "0" ] ;
         then
-            echo "Error when updating FreeBSD packages."
-            exit 1
+            fatal_error 2 "Error when updating FreeBSD packages."
             # TODO: add continue option
         fi
     fi
 }
 
+# TODO: Add support for slim, gdm
+
 install_desktop () {
     dk=$1
-    if [ "$agree" -eq "1" ] ;
-    then 
-        pkg install -y xorg slim $dk
-        if [ "$?" -ne "0" ] ;
-        then
-            echo "Error when installing $dk."
-            exit 1
-        fi
-    else
-        pkg install xorg slim $dk
-        if [ "$?" -ne "0" ] ;
-        then
-            echo "Error when installing $dk."
-            exit 1
-        fi
+    case $dk in
+	    xfce)
+	    	if [ "$agree" -eq "1" ] ;
+            then 
+                pkg install -y xorg slim xfce
+            else
+                pkg install xorg slim xfce
+            fi
+	    	;;
+	    gnome)
+	    	if [ "$agree" -eq "1" ] ;
+            then 
+                pkg install -y xorg gdm gnome-desktop gnome3
+            else
+                pkg install xorg gdm gnome-desktop gnome3
+            fi
+	    	#break
+	    	;;
+	    *)
+		    fatal_error 3 "Error when searching $dk. This desktop does not exist or is not supported."
+		    ;;
+    esac
+    if [ "$?" -ne "0" ] ;
+    then
+        fatal_error 4 "Error when installing $dk."
     fi
 }
 
@@ -54,14 +103,26 @@ configure_desktop () {
     echo 'moused_enable="YES"' >> /etc/rc.conf 
     echo 'dbus_enable="YES"' >> /etc/rc.conf
     echo 'hald_enable="YES"' >> /etc/rc.conf
-    echo 'slim_enable="YES"' >> /etc/rc.conf
-    if [ "$dk" = "xfce" ] ;
+    case $dk in
+	    xfce)
+            echo 'slim_enable="YES"' >> /etc/rc.conf
+	    	echo 'exec xfce4-session' >> /root/.xinitrc
+	    	;;
+	    gnome)
+            echo 'gdm_enable="YES"' >> /etc/rc.conf
+	    	echo 'gnome_enable="YES"' >> /etc/rc.conf
+            echo 'proc /proc procfs rw 0 0' >> /etc/fstab
+	    	#break
+	    	;;
+	    *)
+		    fatal_error 5 "Error when searching $dk. This desktop does not exist or is not supported."
+		    ;;
+    esac
+    if [ "$?" -ne "0" ] ;
     then
-        echo 'exec xfce4-session' >> /root/.xinitrc
-    else
-        echo "Error when configuring $dk."
-        exit 1
+        fatal_error 6 "Error when configuring $dk."
     fi
+    # TODO: check if the lines already exist in the files
 }
 
 setup_user () {
@@ -129,8 +190,19 @@ configure_users_dialog () {
 # -----------------------------------------------
 # install necessary things
 
-dktop="xfce"
-dktop_name="XFCE"
+choose_desktop
+dktop=$?
+case $dktop in
+    xfce)
+    	dktop_name="XFCE"
+        ;;
+    gnome)
+    	dktop_name="GNOME"
+        ;;
+    *)
+	    fatal_error 3 "Error when searching $dk. This desktop does not exist or is not supported."
+	    ;;
+esac
 
 echo "------------------------------------------------------------------"
 echo "Updating FreeBSD packages..."
@@ -148,10 +220,13 @@ configure_desktop $dktop
 
 #------------------------------------------------
 # set up users that might log in using XFCE
-echo
-echo "------------------------------------------------------------------"
-echo "Setting up users that may log in via $dktop_name..."
-configure_users_dialog $dktop_name
+if [ "$dktop" = "xfce" ] ;
+then
+    echo
+    echo "------------------------------------------------------------------"
+    echo "Setting up users that may log in via $dktop_name..."
+    configure_users_dialog $dktop_name
+fi
 
 echo
 echo "------------------------------------------------------------------"
