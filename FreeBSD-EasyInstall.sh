@@ -25,11 +25,11 @@ choose_desktop() {
             case $ans_a in
 	            1)
                     echo "You've picked XFCE."
-                    $dktop="xfce"
+                    dktop="xfce"
 	    	    ;;
 	            2)
                     echo "You've picked GNOME."
-                    $dktop="gnome"
+                    dktop="gnome"
 	    	    ;;
                 0)
                     echo "Quitting."
