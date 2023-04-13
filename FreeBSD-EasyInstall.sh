@@ -86,9 +86,9 @@ install_desktop () {
 	    gnome)
 	    	if [ "$agree" -eq "1" ] ;
             then 
-                pkg install -y xorg gdm gnome gnome-desktop
+                pkg install -y xorg gdm gnome gnome-desktop gnome-session
             else
-                pkg install xorg gdm gnome gnome-desktop
+                pkg install xorg gdm gnome gnome-desktop gnome-session
             fi
 	    	#break
 	    	;;
