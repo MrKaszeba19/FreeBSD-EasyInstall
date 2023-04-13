@@ -86,9 +86,9 @@ install_desktop () {
 	    gnome)
 	    	if [ "$agree" -eq "1" ] ;
             then 
-                pkg install -y xorg gdm gnome-desktop gnome3
+                pkg install -y xorg gdm gnome gnome-desktop
             else
-                pkg install xorg gdm gnome-desktop gnome3
+                pkg install xorg gdm gnome gnome-desktop
             fi
 	    	#break
 	    	;;
@@ -115,8 +115,8 @@ configure_desktop () {
 	    	echo 'exec xfce4-session' >> /root/.xinitrc
 	    	;;
 	    gnome)
-            echo 'gdm_enable="YES"' >> /etc/rc.conf
 	    	echo 'gnome_enable="YES"' >> /etc/rc.conf
+            echo 'gdm_enable="YES"' >> /etc/rc.conf
             echo 'proc /proc procfs rw 0 0' >> /etc/fstab
 	    	#break
 	    	;;
