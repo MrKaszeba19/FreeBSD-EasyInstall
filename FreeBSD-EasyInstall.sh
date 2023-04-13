@@ -7,8 +7,8 @@ then
 fi
 
 choose_desktop() {
-    flag="0"
-    dktop=""
+    flag=0
+    dktop=0
     while [ "$flag" != "1" ]
     do
         clear
@@ -25,11 +25,11 @@ choose_desktop() {
             case $ans_a in
 	            1)
                     echo "You've picked XFCE."
-                    dktop="xfce"
+                    dktop=1
 	    	    ;;
 	            2)
                     echo "You've picked GNOME."
-                    dktop="gnome"
+                    dktop=2
 	    	    ;;
                 0)
                     echo "Quitting."
