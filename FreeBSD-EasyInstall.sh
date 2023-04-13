@@ -209,7 +209,7 @@ case $opt in
     	dktop_name="GNOME"
         ;;
     *)
-	    fatal_error 3 "Error when searching $dk. This desktop does not exist or is not supported."
+	    fatal_error 3 "Error when searching $dktop. This desktop does not exist or is not supported."
 	    ;;
 esac
 
