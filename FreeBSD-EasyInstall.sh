@@ -21,6 +21,7 @@ choose_desktop() {
         echo $ans_a | grep "[^0-2]" > /dev/null 2>&1
         if [ "$?" -ne "0" ]; 
         then
+            flag=1
             case $ans_a in
 	            1)
                     echo "You've picked XFCE."
@@ -30,11 +31,16 @@ choose_desktop() {
                     echo "You've picked GNOME."
                     $dktop="gnome"
 	    	    ;;
+                0)
+                    echo "Quitting."
+                    exit 0
+                ;;
 	            *)
 		            fatal_error 1 "Error when picking up the desktop. This desktop does not exist or is not supported."
 		        ;;
             esac
         fi
+    done
     return $dktop;
 }
 
@@ -191,12 +197,15 @@ configure_users_dialog () {
 # install necessary things
 
 choose_desktop
-dktop=$?
-case $dktop in
-    xfce)
+opt=$?
+dktop=""
+case $opt in
+    1)
+        dktop="xfce"
     	dktop_name="XFCE"
         ;;
-    gnome)
+    2)
+        dktop="gnome"
     	dktop_name="GNOME"
         ;;
     *)
