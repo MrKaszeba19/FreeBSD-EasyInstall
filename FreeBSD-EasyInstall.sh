@@ -38,7 +38,7 @@ choose_desktop() {
         echo 
         echo "    0 - Exit"
         read ans_a
-        echo $ans_a | grep "[^0-2]" > /dev/null 2>&1
+        echo $ans_a | grep "[^0-3]" > /dev/null 2>&1
         if [ "$?" -ne "0" ]; 
         then
             flag=1
@@ -51,7 +51,7 @@ choose_desktop() {
                     echo "You've picked GNOME."
                     dktop=2
 	    	    ;;
-                2)
+                3)
                     echo "You've picked KDE."
                     dktop=3
 	    	    ;;
