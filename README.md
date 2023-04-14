@@ -30,3 +30,15 @@ and some useful programs.
 6. Run your script, e.g. `./FreeBSD-EasyInstaller.sh`
    and follow its steps. You can automatically agree on all questions with `-y` flag.
 7. Reboot with `reboot` command and enjoy. :smile:
+
+## Available graphical desktop environments
+
+- Xfce
+- GNOME
+- KDE Plasma
+
+## Issues
+
+- Logging in via KDE Plasma desktops does not work
+
+
