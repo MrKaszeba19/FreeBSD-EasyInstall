@@ -119,9 +119,9 @@ install_desktop () {
         kde)
 	    	if [ "$agree" -eq "1" ] ;
             then 
-                pkg install -y kde5 plasma5-sddm-kcm sddm xorg
+                pkg install -y kde5 plasma5-plasma kde-baseapps sddm xorg
             else
-                pkg install kde5 plasma5-sddm-kcm sddm xorg
+                pkg install kde5 plasma5-plasma kde-baseapps sddm xorg
             fi
 	    	;;
 	    *)
@@ -139,16 +139,14 @@ configure_desktop () {
     echo '#------------------------------' >> /etc/rc.conf
     echo '# freebsd-easyinstall addition ' >> /etc/rc.conf
     echo 'dbus_enable="YES"' >> /etc/rc.conf
+    echo 'hald_enable="YES"' >> /etc/rc.conf
+    echo 'moused_enable="YES"' >> /etc/rc.conf 
     case $dk in
 	    xfce)
-            echo 'moused_enable="YES"' >> /etc/rc.conf 
-            echo 'hald_enable="YES"' >> /etc/rc.conf
             echo 'slim_enable="YES"' >> /etc/rc.conf
 	    	echo 'exec xfce4-session' >> /root/.xinitrc
 	    	;;
 	    gnome)
-            echo 'moused_enable="YES"' >> /etc/rc.conf 
-            echo 'hald_enable="YES"' >> /etc/rc.conf
 	    	echo 'gnome_enable="YES"' >> /etc/rc.conf
             echo 'gdm_enable="YES"' >> /etc/rc.conf
             echo 'proc /proc procfs rw 0 0' >> /etc/fstab
