@@ -268,7 +268,7 @@ case $opt in
         dktop="gnome"
     	dktop_name="GNOME"
         ;;
-    2)
+    3)
         dktop="kde"
     	dktop_name="KDE Plasma"
         ;;
