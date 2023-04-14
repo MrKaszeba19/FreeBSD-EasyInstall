@@ -39,6 +39,6 @@ and some useful programs.
 
 ## Issues
 
-- Logging in via KDE Plasma desktops does not work
+- Logging in via KDE Plasma desktops does not work with Wayland (use X11 instead)
 
 
