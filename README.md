@@ -1,5 +1,14 @@
 # FreeBSD easy interface installer script
 
+```
+______            ______  ___________ 
+|  ___|           | ___ \/  ___|  _  \
+| |_ _ __ ___  ___| |_/ /\ `--.| | | |  |--    _      |  _  __|_   | |
+|  _| '__/ _ \/ _ \ ___ \ `--. \ | | |  |--/\ (  \  / | | |(  | /\ | |
+| | | | |  __/  __/ |_/ //\__/ / |/ /   |__\/\_)  \/  | | |_) | \/\ \ \
+\_| |_|  \___|\___\____/ \____/|___/              V
+```
+
 **Author:** RooiGevaar19 ([github](https://www.github.com/RooiGevaar19))
 
 Here I'm working on a script that will allow full installation 
