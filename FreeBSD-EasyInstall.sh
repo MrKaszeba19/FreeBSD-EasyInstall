@@ -102,9 +102,11 @@ install_desktop () {
 	    xfce)
 	    	if [ "$agree" -eq "1" ] ;
             then 
-                pkg install -y xorg slim xfce
+                pkg install -y xorg lightdm lightdm-gtk-greeter 
+thunar-archive-plugin xarchiver xfce4-pulseaudio-plugin xfce
             else
-                pkg install xorg slim xfce
+                pkg install xorg lightdm lightdm-gtk-greeter 
+thunar-archive-plugin xarchiver xfce4-pulseaudio-plugin xfce
             fi
 	    	;;
 	    gnome)
@@ -143,8 +145,8 @@ configure_desktop () {
     echo 'moused_enable="YES"' >> /etc/rc.conf 
     case $dk in
 	    xfce)
-            echo 'slim_enable="YES"' >> /etc/rc.conf
-	    	echo 'exec xfce4-session' >> /root/.xinitrc
+            echo 'lightdm_enable="YES"' >> /etc/rc.conf
+	    	echo 'exec startxfce4' >> /root/.xinitrc
 	    	;;
 	    gnome)
 	    	echo 'gnome_enable="YES"' >> /etc/rc.conf
